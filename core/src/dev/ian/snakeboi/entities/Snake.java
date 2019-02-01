@@ -9,8 +9,8 @@ import java.util.LinkedList;
 import java.util.Stack;
 
 import dev.ian.snakeboi.Direction;
-import dev.ian.snakeboi.game.GameInfo;
 import dev.ian.snakeboi.asset.Asset;
+import dev.ian.snakeboi.game.GameInfo;
 
 import static dev.ian.snakeboi.game.GameInfo.SCALE;
 
@@ -73,11 +73,11 @@ public class Snake {
             body.setPosition(nextBody.getX(), nextBody.getY());
         }
         head.setDirection(dir);
+        checkWallCollision();
     }
 
     public void handleEvents() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && dir != Direction.DOWN)
-            dir = Direction.UP;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && dir != Direction.DOWN) dir = Direction.UP;
         else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) && dir != Direction.UP)
             dir = Direction.DOWN;
         else if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && dir != Direction.RIGHT)
@@ -98,27 +98,18 @@ public class Snake {
 
     public boolean isCrash() {
         for (int i = 1; i < snakeBody.size(); i++) {
-            if (isHeadCollide(snakeBody.get(i))) return true;
-            if (isHeadCollideWall()) return true;
+            if (head.isCollide(snakeBody.get(i))) return true;
         }
         return false;
     }
 
-    private boolean isHeadCollide(Cell body) {
-        if (head.getY() == body.getY()) {
-            if (dir == Direction.LEFT && head.getX() - GameInfo.SCALE == body.getX()) return true;
-            if (dir == Direction.RIGHT && head.getX() + GameInfo.SCALE == body.getX()) return true;
-        }
-        return head.getX() == body.getX() && (dir == Direction.UP && head.getY() + GameInfo.SCALE == body.getY() ||
-                dir == Direction.DOWN && head.getY() - GameInfo.SCALE == body.getY());
+    private void checkWallCollision() {
+        if (head.getY() > GameInfo.SCREEN_HEIGHT) head.setY(0);
+        if (head.getY() < 0) head.setY(GameInfo.SCREEN_HEIGHT);
+        if (head.getX() > GameInfo.SCREEN_WIDTH) head.setX(0);
+        if (head.getX() < 0) head.setX(GameInfo.SCREEN_WIDTH);
     }
 
-    private boolean isHeadCollideWall() {
-        return head.getY() >= GameInfo.SCREEN_HEIGHT && dir == Direction.UP ||
-                head.getY() <= 0 && dir == Direction.DOWN ||
-                head.getX() >= GameInfo.SCREEN_WIDTH && dir == Direction.RIGHT ||
-                head.getX() + 32 <= 0 && dir == Direction.LEFT;
-    }
 
     public boolean isFoodTouch(GameObject food) {
         return this.snakeBody.getFirst().isCollide(food);

@@ -22,10 +22,19 @@ public class GameObject {
         setPosition(x, y);
     }
 
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
     public GameObject(Sprite sprite) {
         this.sprite = sprite;
         setSize(GameInfo.SCALE, GameInfo.SCALE);
     }
+
 
     public void setRotation(float degree) {
         sprite.setRotation(degree);
@@ -50,8 +59,12 @@ public class GameObject {
     }
 
     public boolean isCollide(GameObject object) {
-        return sprite.getBoundingRectangle().overlaps(object.sprite.getBoundingRectangle());
+        return x < object.x + object.getWidth() &&
+                x + getWidth() > object.x &&
+                y < object.y + object.getHeight() &&
+                y + getHeight() > object.y;
     }
+
 
     public float getWidth() {
         return sprite.getWidth();

@@ -19,6 +19,7 @@ public class Cell extends GameObject {
         setSize(SCALE, SCALE);
     }
 
+
     public void setDirection(Direction dir) {
         if (dir == Direction.UP) {
             sprite.setRotation(90);
