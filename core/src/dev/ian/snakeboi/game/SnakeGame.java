@@ -2,6 +2,7 @@ package dev.ian.snakeboi.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -91,13 +92,13 @@ public class SnakeGame {
         board.render(batch);
         food.draw(batch);
         snake.render(batch);
+        font.setColor(Color.BLACK);
 
         if (isGameOver) {
             font.draw(batch, "GAME OVER", (WIDTH - 100) / 2, (HEIGHT + 100) / 2);
             font.draw(batch, "Press any key to continue", (WIDTH - 250) / 2, (HEIGHT + 50) / 2);
         }
 
-        font.draw(batch, "Player: Ian Parcs", GameInfo.SCALE * 4, GameInfo.SCREEN_HEIGHT - 10);
         font.draw(batch, "Score: " + Scorer.getScore(), GameInfo.SCALE / 2, GameInfo.SCREEN_HEIGHT - 10);
         font.draw(batch, "Size: " + snake.getBody().size(), GameInfo.SCALE / 2, GameInfo.SCREEN_HEIGHT - 40);
     }

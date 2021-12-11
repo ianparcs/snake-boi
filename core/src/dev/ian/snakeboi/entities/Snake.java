@@ -44,7 +44,7 @@ public class Snake {
         for (int i = 0; i < 5; i++) {
             GameObject life = new GameObject(Asset.instance().getSprite("heart"));
             life.setSize(25, 25);
-            life.setPosition((GameInfo.SCREEN_WIDTH - 25) - life.getWidth() * i, GameInfo.SCREEN_HEIGHT - life.getHeight() - 10);
+            life.setPosition((GameInfo.SCREEN_WIDTH - 25) - life.getWidth() * (i * 1.2f) , GameInfo.SCREEN_HEIGHT - life.getHeight() - 10);
             lives.add(life);
         }
     }
